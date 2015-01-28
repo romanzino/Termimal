@@ -1,0 +1,150 @@
+img-path = '../img/'
+
+reset()
+
+*
+	box-sizing border-box
+
+body, html
+	height 100%
+	overflow hidden
+	background rgb(85, 80, 80)
+
+.title
+	fs 30px
+
+
+.command-enter-wrapper
+	overflow hidden
+	
+	.username-wrapper
+		vertical-align middle
+	
+.command-form
+	display inline
+
+
+.command-input
+	size 497px 25px
+	background transparent
+	color #fff
+	fs 16px
+	border 0
+	&:focus
+		outline none
+	&::-ms-clear
+		hide()
+
+.send-request
+	hide()
+
+.terminal
+	position relative
+	size 750px 400px
+	margin 20px auto
+	min-height 100%
+	color #fff
+	font-family sans-serif
+	
+	a
+		color #fff
+
+	.scrolled-area
+		position relative
+		top -8px
+		height 350px
+		background #333333
+	
+
+	.history
+		position relative
+		max-height 353px
+		width 100%
+		overflow-y scroll
+		padding 10px
+			
+.terminal-title
+	background #3a4141
+	width 100%
+	padding 10px 0 18px 0
+	text-align center
+	border-radius 8px
+		
+.message
+	display block
+	margin 7px 0px
+	overflow hidden
+
+	.command-example
+		color gray
+		fw bold
+	
+
+	.command
+		color gray
+		padding-bottom 5px
+	
+
+.message-content
+	
+	.help-item
+		float left
+		margin 2px 10px
+		fw bold
+		
+		&:nth-child(2)
+			margin-left 0
+		
+	.descr
+		clear both
+
+	.left-column, .right-column
+		float left
+		position relative
+	
+
+	.icon-column
+		width 60px
+		position relative
+
+		img, .icon
+			display block
+			position absolute
+			top 0
+			left 0
+			right 0
+			bottom 0
+			margin auto
+		
+
+		.time-icon
+			bg 'time.png'
+			size 40px 40px
+
+	.weather-icon-column
+		height 80px
+	
+
+	.time-icon-column
+		height 64px
+	
+
+	.right-column
+		margin-left 10px
+		
+b
+	fw bold
+	
+.error
+	color red
+	
+.fatal-error
+	margin 20px
+	padding 10px
+	background #F6F617
+	fs 20px
+	text-align center
+	upcase()
+	
+	.error
+		fw bold
