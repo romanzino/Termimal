@@ -16,7 +16,7 @@ define(['views/commands', 'request', 'helper', 'text!mtemplate/coordinates.html'
 			var appContext = this,
 				adress;
 
-			if (keys.indexOf('--my') >= 0) {
+			if (_.contains(keys, '--my')) {
 				if (window.navigator) {
 					window.navigator.geolocation.getCurrentPosition(
 						function success (data) {

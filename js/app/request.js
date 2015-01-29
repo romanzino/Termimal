@@ -26,7 +26,7 @@ define(['views/commands'], function (Commands) {
 					Commands.add(command, success ? success(data.response) : data.response);
 				}
 				else {
-					Commands.add(command, null, 'error');
+					Commands.add(command, data.errorText ? data.errorText : null, 'error');
 				}
 			})
 			.fail(function () {

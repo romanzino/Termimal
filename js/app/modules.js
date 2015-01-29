@@ -8,7 +8,8 @@ define(function (require) {
 				'translate': require('modules/translate'),
 				'myname': require('modules/myname'),
 				'clear': require('modules/clear'),
-				'coordinates': require('modules/coordinates')
+				'coordinates': require('modules/coordinates'),
+				'ip': require('modules/ip')
 			}
 		}
 	};

@@ -20,7 +20,7 @@ define(['views/commandInput', 'views/commands', 'commandHistory'], function (Com
 				keysLength,
 				appContext = this;
 
-			if (command.length > 3) {
+			if (command.length >= 2) {
 				CommandHistory.remember(command);
 				CommandInput.disable();
 
