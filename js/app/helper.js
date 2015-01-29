@@ -1,7 +1,13 @@
-define(function () {
+define(['views/commands'], function (Commands) {
 	var Helper = {
-		lngLat: function (city, country) {
-			return $.getJSON("http://maps.google.com/maps/api/geocode/json?address=" + city + "," + country  + "&sensor=false");
+		lngLat: function (city, country, address) {
+			var address = address ? address : city + "," + country,
+			json = $.getJSON("http://maps.google.com/maps/api/geocode/json?address=" + address + "&sensor=false")
+				.fail(function () {
+					Commands.add(command, 'server', 'error');
+				});
+
+			return json;
 		},
 		cityCountry: function (command) {
 			var comma = command.indexOf(","),

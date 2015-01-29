@@ -13,39 +13,30 @@ define(['views/commands', 'request', 'helper', 'text!template/modules/time.html'
 		template: _.template(template),
 		process: function (command) {
 			var locData = Helper.cityCountry(command),
-				appContext = this;
+				appContext = this,
+				res;
 
 			if (locData) {
 				Helper.lngLat(locData.city, locData.country)
 					.done(function (data) {
 						res = data.results[0].geometry.location;
-						$.post(
-							"backend/modules/time.php",
+						Request.send.call(
+							appContext,
+							command,
 							{
 								latitude: res.lat,
 								longitude: res.lng
 							},
 							function (data) {
-								if (data.response) {
-									Commands.add(command, appContext.template({
-										time: data.response.time,
-										sunset: data.response.sunset,
-										sunrise: data.response.sunrise,
-										timezone: data.response.timezoneId
-									}));
-								}
-								else {
-									Commands.add(command, null, 'error');
-								}
-							},
-							'json'
-						).fail (function () {
-							Commands.add(command, 'server', 'error');
-						});
+								return appContext.template({
+									time: data.time,
+									sunset: data.sunset,
+									sunrise: data.sunrise,
+									timezone: data.timezoneId
+								});
+							}
+						);
 					})
-					.fail(function () {
-						Commands.add(command, 'server', 'error');
-					});
 			}
 			else {
 				Commands.add(command, "Specify the correct city and country. <br>For example: time in Nuuk, Greenland", 'error');

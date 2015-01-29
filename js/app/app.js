@@ -5,7 +5,7 @@ define(['views/commands', 'views/terminal', 'modules', 'commandHistory'], functi
 		 */
 		init: function () {
 			//Welcome message
-			Commands.add('Welcome message', "Hello! To start using this program please review with its functionality with <span class='command'>help</span> command.");
+			Commands.add('Welcome!', "Before start review with console functionality via <span class='command'>help</span> command.");
 			//Remember all commands
 			CommandHistory.init();
 			//Load our modules

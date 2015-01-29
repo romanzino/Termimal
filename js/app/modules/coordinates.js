@@ -16,17 +16,20 @@ define(['views/commands', 'request', 'helper', 'text!mtemplate/coordinates.html'
 			var appContext = this,
 				adress;
 
-			if (_.contains(keys, '--my')) {
+			if (keys.indexOf('--my') >= 0) {
 				if (window.navigator) {
-					window.navigator.geolocation.getCurrentPosition(function (data) {
-						Commands.add(command, appContext.template({
-							latitude: data.coords.latitude,
-							longitude: data.coords.longitude,
-							accuracy: data.coords.accuracy
-						}));
-					}, function () {
-						Commands.add(command, null, 'error')
-					});
+					window.navigator.geolocation.getCurrentPosition(
+						function success (data) {
+							Commands.add(command, appContext.template({
+								latitude: data.coords.latitude,
+								longitude: data.coords.longitude,
+								accuracy: data.coords.accuracy
+							}));
+						}, 
+						function error () {
+							Commands.add(command, null, 'error')
+						}
+					);
 				}
 				else {
 					Commands.add(command, "Your browser doesn't support this function", 'error')
@@ -36,19 +39,16 @@ define(['views/commands', 'request', 'helper', 'text!mtemplate/coordinates.html'
 				address = command.replace("coordinates", "").trim();
 
 				if (address.length > 0) {
-					$.getJSON("http://maps.google.com/maps/api/geocode/json?address="+address+"&sensor=false")
+					Helper.lngLat(null, null, address)
 						.done(function (data) {
 							data = data.results[0];
-							console.log(data);
+
 							Commands.add(command, appContext.templateAdress({
 								address: data.formatted_address,
 								longitude: data.geometry.location.lng,
 								latitude: data.geometry.location.lat
 							}));
-						})
-						.fail(function (data) {
-							Commands.add(command, 'server', 'error')
-						})
+						});
 				}
 				else {
 					Commands.add(command, 'Specify address', 'error');

@@ -20,9 +20,9 @@ define(['request', 'views/commands'], function (Request, Commands) {
 			if (keys) {
 				//Detect language
 				if (text.length > 0) {
-					Request.send(
-						command,
-						"backend/modules/translate.php", 
+					Request.send.call(
+						this,
+						command, 
 						{
 							text: text,
 							keys: keys
