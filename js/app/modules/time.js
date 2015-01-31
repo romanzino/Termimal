@@ -4,7 +4,7 @@ define(['views/commands', 'request', 'helper', 'text!template/modules/time.html'
 		 * Command description
 		 * @type {String}
 		 */
-		descr: "shows local time. <br>Example: <span class='command-example'>time in Kiev, Ukraine</span>",
+		descr: "shows local time. <div>Syntax: <span class='command-example'>time =address=</span></div><div>Example: <span class='command-example'>time San-Diego, USA</span></div>",
 		/**
 		 * Keyword
 		 * @type {String}
@@ -12,27 +12,28 @@ define(['views/commands', 'request', 'helper', 'text!template/modules/time.html'
 		word: 'time',
 		template: _.template(template),
 		process: function (command) {
-			var locData = Helper.cityCountry(command),
+			var locData = command.replace(this.word, "").trim(),
 				appContext = this,
 				res;
 
 			if (locData) {
-				Helper.lngLat(locData.city, locData.country)
+				Helper.lngLat(locData)
 					.done(function (data) {
-						res = data.results[0].geometry.location;
+						res = data.results[0];
 						Request.send.call(
 							appContext,
 							command,
 							{
-								latitude: res.lat,
-								longitude: res.lng
+								latitude: res.geometry.location.lat,
+								longitude: res.geometry.location.lng
 							},
 							function (data) {
 								return appContext.template({
 									time: data.time,
 									sunset: data.sunset,
 									sunrise: data.sunrise,
-									timezone: data.timezoneId
+									timezone: data.timezoneId,
+									address: res.formatted_address
 								});
 							}
 						);
